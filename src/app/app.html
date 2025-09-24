@@ -4,21 +4,23 @@
   <!-- MASTER: Categories -->
   <div style="float: left; width: 200px;">
     <h3>Categories</h3>
-    <ul>
-      <li *ngFor="let category of categories" 
-          (click)="selectedcategory = category">
-        {{ category }}
-      </li>
-    </ul>
+<ul>
+  <li *ngFor="let categoryObj of getCategoriesWithCounts()" 
+      (click)="selectedcategory = categoryObj.name">
+    <span>{{ categoryObj.name }}</span>
+    <span style="float: right;">{{ categoryObj.count }}</span>
+  </li>
+</ul>
   </div>
   
+
   <!-- DETAIL: Filtered Tasks -->
   <div style="float: left; width: 400px;">
     <h3>{{ selectedcategory }} Tasks</h3>
     <ul>
-      <li *ngFor="let task of getfilteredtasks()" (click)="changestatus(task)">
+      <li *ngFor="let task of getfilteredtasks(); let i = index" (click)="changestatus(task)">
         {{ task.text }}
-        
+        <button (click)="delete(i)">Delete</button>
         
       </li>
     </ul>

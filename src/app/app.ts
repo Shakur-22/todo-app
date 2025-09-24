@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 
 export class App {
   
-  categories = ['In Progress', 'Completed'];
+ 
   selectedcategory = 'In Progress';
 
   tasks = [
@@ -34,7 +34,7 @@ export class App {
   }
 
   getfilteredtasks() {
-    if (this.selectedcategory === 'Completed') {
+    if (this.selectedcategory === 'completed') {
       return this.tasks.filter(task => task.completed === true);
     } else {
       return this.tasks.filter(task => task.completed === false);
@@ -49,7 +49,24 @@ export class App {
      }
   }
 
+  delete(index: number) {
+    this.tasks.splice(index, 1)
+  }
 
+  
+  countfalse() {
+    return this.tasks.filter(task => task.completed === false).length
+  }
+
+  counttrue() {
+    return this.tasks.filter(task => task.completed === true).length
+  }
+
+  getCategoriesWithCounts() {
+  return [
+    { name: 'In Progress', count: this.countfalse() },
+    { name: 'completed', count: this.counttrue() }
+  ];
 }
 
- 
+}
