@@ -1,34 +1,42 @@
 <h1>My Todo App</h1>
 
-<div>
-  <!-- MASTER: Categories -->
-  <div style="float: left; width: 200px;">
-    <h3>Categories</h3>
+
+
+
+
+
+<div style="float: left; width: 200px;">
+<h3>Catagories</h3>
+
 <ul>
-  <li *ngFor="let categoryObj of getCategoriesWithCounts()" 
-      (click)="selectedcategory = categoryObj.name">
-    <span>{{ categoryObj.name }}</span>
-    <span style="float: right;">{{ categoryObj.count }}</span>
+  <li *ngFor="let obj of getCategoriesWithCounts()" (click)="selectedcatagory = obj.name">
+    <span>{{obj.name}}</span> 
+    <span style="float: right;">{{obj.count}}</span> 
+
   </li>
 </ul>
-  </div>
-  
-
-  <!-- DETAIL: Filtered Tasks -->
-  <div style="float: left; width: 400px;">
-    <h3>{{ selectedcategory }} Tasks</h3>
-    <ul>
-      <li *ngFor="let task of getfilteredtasks(); let i = index" (click)="changestatus(task)">
-        {{ task.text }}
-        <button (click)="delete(i)">Delete</button>
-        
-      </li>
-    </ul>
-  </div>
 </div>
 
-<!-- Your existing add task section -->
-<div style="clear: both;">
-  <input [(ngModel)]="newtask" placeholder="Enter a new task">
+<div style="float: left; width: 400px;">
+  <h3>{{selectedcatagory}} Tasks</h3>
+  <ul>
+    <li *ngFor="let task of getfilteredtask()"  (click)="changestatus(task)">
+      {{task.text}}
+      <button (click)="delete(task)">Delete</button>
+    </li>
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+<div><input [(ngModel)]="newtask" (keydown.enter)="addtask()" placeholder="Enter New Task">
   <button (click)="addtask()">Add Task</button>
 </div>
+
+

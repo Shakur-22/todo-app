@@ -13,60 +13,62 @@ import { CommonModule } from '@angular/common';
 
 export class App {
   
- 
-  selectedcategory = 'In Progress';
+selectedcatagory = 'In Progress'
 
-  tasks = [
-    {text: 'Task 1', completed: false},
-    {text: 'Task 2', completed: false},
-    {text: 'Task 3', completed: false}
-  ]
+newtask = ''
 
-  newtask = "";
+tasks = [
+  {text: 'Task 1', completed: false},
+  {text: 'Task 2', completed: false},
+  {text: 'Task 3', completed: false}
+]
 
-  addtask() {
-    if (this.newtask !== "") {
-      this.tasks.push({text: this.newtask, completed: false})
-      this.newtask = ""
-    } else {
-      alert('Enter a Task')
-    }
-  }
 
-  getfilteredtasks() {
-    if (this.selectedcategory === 'completed') {
-      return this.tasks.filter(task => task.completed === true);
-    } else {
-      return this.tasks.filter(task => task.completed === false);
-    }
-  }
 
-  changestatus(whichtask: any) {
-     if (whichtask.completed == true) {
-      whichtask.completed = false
-     } else {
-      whichtask.completed = true
-     }
-  }
+addtask() {
+  this.tasks.push({text: this.newtask, completed: false})
+  this.newtask = ''
+}
 
-  delete(index: number) {
-    this.tasks.splice(index, 1)
-  }
+countComplete() {
+  return this.tasks.filter(task => task.completed == true).length
+}
 
-  
-  countfalse() {
-    return this.tasks.filter(task => task.completed === false).length
-  }
-
-  counttrue() {
-    return this.tasks.filter(task => task.completed === true).length
-  }
+countInProgress() {
+  return this.tasks.filter(task => task.completed == false).length
+}
 
   getCategoriesWithCounts() {
   return [
-    { name: 'In Progress', count: this.countfalse() },
-    { name: 'completed', count: this.counttrue() }
+    { name: 'In Progress', count: this.countInProgress() },
+    { name: 'completed', count: this.countComplete() }
   ];
 }
+
+  getfilteredtask() {
+    if (this.selectedcatagory == "In Progress") {
+      return this.tasks.filter(task => task.completed == false)
+    } else {
+      return this.tasks.filter(task => task.completed == true)
+
+    }
+  }
+
+
+  changestatus(wtask: any) {
+    if (wtask.completed == true){
+      wtask.completed = false
+    } else {
+      wtask.completed = true
+    }
+  }
+
+delete(taskToDelete: any) {
+  const index = this.tasks.indexOf(taskToDelete);
+  if (index > -1) {
+    this.tasks.splice(index, 1);
+  }
+}
+
 
 }
