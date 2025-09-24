@@ -1,6 +1,6 @@
 // app.component.ts
 import { Component, input } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,17 +17,52 @@ selectedcatagory = 'In Progress'
 
 newtask = ''
 
+etask = ''
+
+
 tasks = [
-  {text: 'Task 1', completed: false},
-  {text: 'Task 2', completed: false},
-  {text: 'Task 3', completed: false}
+  {text: 'Buy groceries', completed: false, edit: false, high: true},
+  {text: 'Schedule dentist appointment', completed: false, edit: false, high: false},
+  {text: 'Complete project proposal', completed: false, edit: false, high: true},
+  {text: 'Call mom', completed: false, edit: false, high: false},
+  {text: 'Pay electricity bill', completed: false, edit: false, high: true},
+  {text: 'Walk the dog', completed: false, edit: false, high: false},
+  {text: 'Read 20 pages of book', completed: false, edit: false, high: false},
+  {text: 'Clean bathroom', completed: false, edit: false, high: false},
+  {text: 'Submit timesheet', completed: false, edit: false, high: true},
+  {text: 'Water plants', completed: false, edit: false, high: false},
+  {text: 'Update resume', completed: false, edit: false, high: true}
 ]
 
 
+edittask(taskToEdit: any) {
+  const index = this.tasks.indexOf(taskToEdit);
+  this.tasks[index].edit = true;
+}
+
+updateTask(taskToUpdate: any) {
+  const index = this.tasks.indexOf(taskToUpdate);
+  this.tasks[index].text = this.etask;
+  this.tasks[index].edit = false
+  this.etask = ''
+}
+
+changePriority(taskPriority: any) {
+  if (taskPriority.high == true) {
+    taskPriority.high = false
+  } else {
+    taskPriority.high = true
+  }
+
+}
 
 addtask() {
-  this.tasks.push({text: this.newtask, completed: false})
+  if (this.newtask != ''){
+  this.tasks.push({text: this.newtask, completed: false, edit: false, high: false})
   this.newtask = ''
+  } else {
+    alert("Enter Task")
+  }
 }
 
 countComplete() {
