@@ -1,44 +1,43 @@
-<h1>My Todo App</h1>
+<div class="container">
+  <h1>My Todo App</h1>
+  
+  <div class="categories">
+    <h3>Categories</h3>
+    <ul>
+      <li *ngFor="let obj of getCategoriesWithCounts()" 
+          (click)="selectedcatagory = obj.name">
+        <span>{{obj.name}}</span> 
+        <span style="float: right;">{{obj.count}}</span>
+      </li>
+    </ul>
+  </div>
 
-
-
-
-
-
-<div style="float: left; width: 200px;">
-<h3>Catagories</h3>
-
-<ul>
-  <li *ngFor="let obj of getCategoriesWithCounts()" (click)="selectedcatagory = obj.name">
-    <span>{{obj.name}}</span> 
-    <span style="float: right;">{{obj.count}}</span> 
-
-  </li>
-</ul>
+  <div class="tasks">
+    <h3>{{selectedcatagory}} Tasks</h3>
+    <ul>
+      <li *ngFor="let task of getfilteredtask()" class="task-item">
+        <div>
+          <span style="float: left;" *ngIf="task.high == true">🚩</span>
+          <span (click)="changestatus(task)">{{task.text}}</span>
+          <span *ngIf="task.edit == true">
+            <input [(ngModel)]="etask" 
+                   (keydown.enter)="updateTask(task)" 
+                   placeholder="Enter Edit">
+          </span>
+        </div>
+        <div>
+          <button (click)="delete(task)">Delete</button>
+          <button (click)="edittask(task)">Edit</button>
+          <button (click)="changePriority(task)">!</button>
+        </div>
+      </li>
+    </ul>
+    
+    <div>
+      <input [(ngModel)]="newtask" 
+             (keydown.enter)="addtask()" 
+             placeholder="Enter New Task">
+      <button (click)="addtask()">Add Task</button>
+    </div>
+  </div>
 </div>
-
-<div style="float: left; width: 400px;">
-  <h3>{{selectedcatagory}} Tasks</h3>
-  <ul>
-    <li *ngFor="let task of getfilteredtask()">
-      <span (click)="changestatus(task)">{{task.text}}</span>
-      <span *ngIf="task.edit == true"><input [(ngModel)]="etask" (keydown.enter)="updateTask(task)" placeholder="Enter Edit"></span>
-      <button (click)="delete(task)">Delete</button>
-      <button (click)="edittask(task)">Edit</button>
-    </li>
-  </ul>
-</div>
-
-
-
-
-
-
-
-
-
-<div><input [(ngModel)]="newtask" (keydown.enter)="addtask()" placeholder="Enter New Task">
-  <button (click)="addtask()">Add Task</button>
-</div>
-
-
