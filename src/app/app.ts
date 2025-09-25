@@ -13,6 +13,22 @@ import { CommonModule } from '@angular/common';
 
 export class App {
   
+saveTasks() {
+  localStorage.setItem('todoTasks', JSON.stringify(this.tasks));
+}
+
+ngOnInit() {
+  this.loadTasks();
+}
+
+loadTasks() {
+  const savedTasks = localStorage.getItem('todoTasks');
+  if (savedTasks) {
+    this.tasks = JSON.parse(savedTasks);
+  }
+}
+
+
 selectedcatagory = 'In Progress'
 
 newtask = ''
@@ -38,6 +54,7 @@ tasks = [
 edittask(taskToEdit: any) {
   const index = this.tasks.indexOf(taskToEdit);
   this.tasks[index].edit = true;
+  this.saveTasks();
 }
 
 updateTask(taskToUpdate: any) {
@@ -45,6 +62,7 @@ updateTask(taskToUpdate: any) {
   this.tasks[index].text = this.etask;
   this.tasks[index].edit = false
   this.etask = ''
+  this.saveTasks();
 }
 
 changePriority(taskPriority: any) {
@@ -53,7 +71,7 @@ changePriority(taskPriority: any) {
   } else {
     taskPriority.high = true
   }
-
+this.saveTasks();
 }
 
 addtask() {
@@ -63,6 +81,7 @@ addtask() {
   } else {
     alert("Enter Task")
   }
+  this.saveTasks();
 }
 
 countComplete() {
@@ -96,6 +115,7 @@ countInProgress() {
     } else {
       wtask.completed = true
     }
+    this.saveTasks();
   }
 
 delete(taskToDelete: any) {
@@ -103,6 +123,7 @@ delete(taskToDelete: any) {
   if (index > -1) {
     this.tasks.splice(index, 1);
   }
+  this.saveTasks();
 }
 
 
